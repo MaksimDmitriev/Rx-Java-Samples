@@ -3,6 +3,7 @@ package ru.sample
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,5 +30,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "data=$data")
             }
         }
+
+        Observable.combineLatest(
+                RxTextView.textChanges(loginEditText),
+                RxTextView.textChanges(passEditText),
+                BiFunction<CharSequence, CharSequence, Boolean> { login, pass ->
+                    login.isNotEmpty() && pass.isNotEmpty()
+                }
+        ).subscribe(loginButton::setEnabled)
+        // https://youtu.be/3jdvLrYZfB4?t=1190 - No BiFunction TODO
     }
 }

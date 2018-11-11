@@ -8,7 +8,9 @@ class NetworkRepo : Repo {
         return Observable.just(
                 Data("network1", 1000L),
                 Data("network2", 1001L),
-                Data("network3", 1002L)
+                Data("network3", 1002L),
+                Data("network4", 1010L)
+
         )
     }
 }
