@@ -4,6 +4,8 @@ import io.reactivex.Observable
 
 class LocalRepo : Repo {
 
+    override fun getRawData() = Observable.just("local string")
+
     override fun getData(): Observable<Data> {
         return Observable.just(
                 Data("local1", 700L),

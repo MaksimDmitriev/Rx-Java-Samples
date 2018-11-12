@@ -39,5 +39,15 @@ class MainActivity : AppCompatActivity() {
                 }
         ).subscribe(loginButton::setEnabled)
         // https://youtu.be/3jdvLrYZfB4?t=1190 - No BiFunction TODO
+
+        switchIfEmpty.setOnClickListener {
+            val networkRepo = NetworkRepo()
+            val localRepo = LocalRepo()
+            networkRepo.getRawData().switchIfEmpty(
+                    localRepo.getRawData()
+            ).subscribe { s ->
+                Log.d(TAG, "s=$s")
+            }
+        }
     }
 }

@@ -4,6 +4,8 @@ import io.reactivex.Observable
 
 class NetworkRepo : Repo {
 
+    override fun getRawData(): Observable<String> = Observable.empty<String>()
+
     override fun getData(): Observable<Data> {
         return Observable.just(
                 Data("network1", 1000L),

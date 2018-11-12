@@ -32,4 +32,10 @@
         android:enabled="false"
         android:text="login" />
 
+    <Button
+        android:id="@+id/switchIfEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="switchIfEmpty" />
+
 </LinearLayout>
