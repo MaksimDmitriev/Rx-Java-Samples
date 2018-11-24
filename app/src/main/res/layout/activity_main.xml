@@ -38,4 +38,16 @@
         android:layout_height="wrap_content"
         android:text="switchIfEmpty" />
 
+    <Button
+        android:id="@+id/loadLargeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="load Large Image" />
+
+    <ImageView
+        android:id="@+id/largeImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerInside" />
+
 </LinearLayout>

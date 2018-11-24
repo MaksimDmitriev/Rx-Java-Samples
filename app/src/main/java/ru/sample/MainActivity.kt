@@ -1,10 +1,13 @@
 package ru.sample
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -48,6 +51,22 @@ class MainActivity : AppCompatActivity() {
             ).subscribe { s ->
                 Log.d(TAG, "s=$s")
             }
+        }
+
+        loadLargeImage.setOnClickListener {
+            Single.fromCallable {
+                val inputStream = assets.open("large_image.png")
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                bitmap
+            }.subscribe(
+                    { bitmap ->
+                        largeImage.setImageBitmap(bitmap)
+                    },
+                    { e ->
+                        Toast.makeText(MainActivity@ this, "Error while loading a large image", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "", e)
+                    }
+            )
         }
     }
 }
