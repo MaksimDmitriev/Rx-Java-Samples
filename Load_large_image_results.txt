@@ -8,3 +8,11 @@ Systrace - Bitmap Decoding on the Main Thread - Screenshot on your GDrive
 Systrace - Bitmap Decoding on the Main Thread 2 - Screenshot on your GDrive
 Closing the input stream is the right thing to do, but we still have the performance issue: we do
 bitmap loading on the main thread. And it takes about 1 second on my Xiaomi Redmi 4X
+
+851e892
+Systrace - Bitmap Decoding on an IO Thread - Screenshot on your GDrive
+We no longer steal the UI thread's CPU time so the UI doesn't hang for a second while the large
+image is loaded
+
+About systrace:
+https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html#0
