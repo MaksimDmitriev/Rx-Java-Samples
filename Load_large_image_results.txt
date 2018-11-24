@@ -3,3 +3,8 @@ java.lang.OutOfMemoryError: Failed to allocate a 233280012 byte allocation with 
 
 92f4946
 Systrace - Bitmap Decoding on the Main Thread - Screenshot on your GDrive
+
+8298c3a
+Systrace - Bitmap Decoding on the Main Thread 2 - Screenshot on your GDrive
+Closing the input stream is the right thing to do, but we still have the performance issue: we do
+bitmap loading on the main thread. And it takes about 1 second on my Xiaomi Redmi 4X
