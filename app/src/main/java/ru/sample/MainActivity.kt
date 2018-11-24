@@ -11,6 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.InputStream
 
 private const val TAG = "RxJavaSamples"
 
@@ -73,16 +74,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun decodeSampledBitmapFromAssets(reqWidth: Int, reqHeight: Int): Bitmap {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        val stream = assets.open("large_image.png")
-        stream.mark(Int.MAX_VALUE)
-        BitmapFactory.decodeStream(stream, null, options)
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
-        options.inJustDecodeBounds = false
+        assets.open("large_image.png").use {
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            it.mark(Int.MAX_VALUE)
+            BitmapFactory.decodeStream(it, null, options)
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+            options.inJustDecodeBounds = false
 
-        stream.reset()
-        return BitmapFactory.decodeStream(stream, null, options)
+            it.reset()
+            return BitmapFactory.decodeStream(it, null, options)
+        }
     }
 
     private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
