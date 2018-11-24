@@ -1,2 +1,5 @@
 b7ee11e
 java.lang.OutOfMemoryError: Failed to allocate a 233280012 byte allocation with 8388608 free bytes and 183MB until OOM
+
+92f4946
+Systrace - Bitmap Decoding on the Main Thread - Screenshot on your GDrive
