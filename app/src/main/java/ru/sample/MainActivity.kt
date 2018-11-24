@@ -9,9 +9,10 @@ import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.InputStream
 
 private const val TAG = "RxJavaSamples"
 
@@ -61,15 +62,17 @@ class MainActivity : AppCompatActivity() {
                         resources.getDimensionPixelSize(R.dimen.required_size),
                         resources.getDimensionPixelSize(R.dimen.required_size)
                 )
-            }.subscribe(
-                    { bitmap ->
-                        largeImage.setImageBitmap(bitmap)
-                    },
-                    { e ->
-                        Toast.makeText(MainActivity@ this, "Error while loading a large image", Toast.LENGTH_SHORT).show()
-                        Log.e(TAG, "", e)
-                    }
-            )
+            }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { bitmap ->
+                                largeImage.setImageBitmap(bitmap)
+                            },
+                            { e ->
+                                Toast.makeText(MainActivity@ this, "Error while loading a large image", Toast.LENGTH_SHORT).show()
+                                Log.e(TAG, "", e)
+                            }
+                    )
         }
     }
 
