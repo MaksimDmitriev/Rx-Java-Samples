@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/largeImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/required_size"
+        android:layout_height="@dimen/required_size"
         android:scaleType="centerInside" />
 
 </LinearLayout>

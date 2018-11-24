@@ -1,5 +1,6 @@
 package ru.sample
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -55,18 +56,52 @@ class MainActivity : AppCompatActivity() {
 
         loadLargeImage.setOnClickListener {
             Single.fromCallable {
-                val inputStream = assets.open("large_image.png")
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                bitmap
+                decodeSampledBitmapFromAssets(
+                        resources.getDimensionPixelSize(R.dimen.required_size),
+                        resources.getDimensionPixelSize(R.dimen.required_size)
+                )
             }.subscribe(
                     { bitmap ->
                         largeImage.setImageBitmap(bitmap)
                     },
                     { e ->
                         Toast.makeText(MainActivity@ this, "Error while loading a large image", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "", e)
+                        Log.e(TAG, "", e)
                     }
             )
         }
+    }
+
+    private fun decodeSampledBitmapFromAssets(reqWidth: Int, reqHeight: Int): Bitmap {
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        val stream = assets.open("large_image.png")
+        stream.mark(Int.MAX_VALUE)
+        BitmapFactory.decodeStream(stream, null, options)
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+        options.inJustDecodeBounds = false
+
+        stream.reset()
+        return BitmapFactory.decodeStream(stream, null, options)
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        // Raw height and width of image
+        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+
+        return inSampleSize
     }
 }
