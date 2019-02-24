@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         combineLatest.setOnClickListener {
             val networkRepo = NetworkRepo()
             val localRepo = LocalRepo()
@@ -74,6 +73,10 @@ class MainActivity : AppCompatActivity() {
                             }
                     )
         }
+
+        mapAndFlashMap.setOnClickListener {
+            mapAndFlashMap()
+        }
     }
 
     private fun decodeSampledBitmapFromAssets(reqWidth: Int, reqHeight: Int): Bitmap {
@@ -108,5 +111,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         return inSampleSize
+    }
+
+    private fun mapAndFlashMap() {
+        Observable.just("1", "2")
+                .map { it -> (it + it) }
+                .subscribe { it ->
+                    Log.d(TAG, "map s=$it")
+                }
+
+        Observable.just("1", "2")
+                .flatMap { s -> Observable.just(s + s) }
+                .subscribe { it ->
+                    Log.d(TAG, "flashMap s=$it")
+                }
     }
 }

@@ -42,12 +42,18 @@
         android:id="@+id/loadLargeImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="load Large Image" />
+        android:text="load Large Image (Single from Callable)" />
 
     <ImageView
         android:id="@+id/largeImage"
         android:layout_width="@dimen/required_size"
         android:layout_height="@dimen/required_size"
         android:scaleType="centerInside" />
+
+    <Button
+        android:id="@+id/mapAndFlashMap"
+        android:layout_width="match_parent"
+        android:text="Map and FlashMap"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
